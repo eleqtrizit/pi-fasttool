@@ -51,7 +51,7 @@ export default function (pi: ExtensionAPI) {
     ctx.ui.setStatus("fasttool", `${convertedCount} converted this session`);
     ctx.ui.notify(
       `fasttool: ${truncate(original)}\n      -> ${truncate(find.command)}`,
-      "warning",
+      "info",
     );
     return undefined;
   });
