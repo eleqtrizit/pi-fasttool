@@ -40,6 +40,10 @@ extract_grep_*.py     uv scripts that mined ~3200 pi session files for real grep
 grep_commands.txt     5754 unique grep invocations extracted from session history
 ```
 
+## Note on repository contents
+
+A local `helptooling/` directory (gitignored) holds corpus extraction scripts and the session-mined data files used to design and verify the conversion rules. It is not part of the package and not tracked in the repository; see `helptooling/README.md` for an inventory of its files.
+
 ## Development
 
 ```bash

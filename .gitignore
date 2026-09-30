@@ -20,3 +20,6 @@ find_converted.txt
 find_flag_counts.txt
 find_tokens.txt
 smallest_list
+
+# Local tooling and corpora, not part of the package
+helptooling/

@@ -20,12 +20,7 @@ All conversion logic is pure and lives in `src/utils/`, so it is testable withou
 | `extensions/index.ts` | Extension entry point. The only code that touches `ExtensionAPI`; keep it thin. |
 | `src/utils/convert-grep.ts` | Pure converter: quote-aware tokenizer, segment splitter (pipes, `;`, `&&`, `||`), flag rewriting, BRE-to-ERE pattern conversion. |
 | `src/utils/convert-grep.test.ts` | 34 vitest tests. Every behavior change needs a test here. |
-| `extract_grep_examples.py` | uv script: mines `~/.pi/agent/sessions/**/*.jsonl` for bash tool-call lines containing `grep`. Writes `grep_examples.txt` locally. |
-| `extract_grep_commands.py` | uv script: extracts each `grep` invocation (flags + operands) from `grep_examples.txt`. Writes `grep_commands.txt` locally. |
-| `extract_grep_flags.py` | uv script: tokenizes invocations and writes per-line flag sets to `grep_flags.txt` locally. Used to size the flag rules. |
-| `extract_find_*.py` | Same three-stage pipeline for `find` invocations (`find_examples.txt`, `find_commands.txt`, `find_flag_counts.txt`, `find_tokens.txt`). |
-
-The corpus files are personal data (mined from local session history) and are gitignored. Regenerate them locally with the scripts when you need the ground truth; never commit them.
+| `src/utils/convert-find.test.ts` | 34 vitest tests. Every behavior change needs a test here. |
 
 ## Conversion rules (summary)
 
@@ -41,7 +36,6 @@ The corpus files are personal data (mined from local session history) and are gi
 ```bash
 npm run typecheck    # tsc --noEmit
 npm test             # vitest run
-node --experimental-strip-types script.mjs   # ad-hoc corpus checks against grep_commands.txt
 pi -e ./extensions/index.ts                  # live run of the extension
 ```
 
@@ -50,13 +44,10 @@ Both `npm run typecheck` and `npm test` must pass before any commit.
 ## When changing the converter
 
 1. Add or update tests in `src/utils/convert-grep.test.ts` first for the flag or pattern case.
-2. Verify against the corpus: run the converter over `grep_commands.txt` and confirm no unexpected regressions (compare converted counts before and after).
-3. Keep the conversion tables in the module docstring of `convert-grep.ts` in sync with the code.
-4. Update the README.md flag table if user-visible behavior changes.
+2. Keep the conversion tables in the module docstring of `convert-grep.ts` in sync with the code.
+3. Update the README.md flag table if user-visible behavior changes.
 
-## Data pipeline
-
-The Python scripts are one-shot extraction tools, kept for reproducibility. If the conversion rules change materially, re-run them in order (`extract_grep_examples.py` -> `extract_grep_commands.py` -> `extract_grep_flags.py`) to rebuild the corpora from session history.
+Ad-hoc verification against real session-mined data happens in the untracked local `helptooling/` directory; its scripts and corpora are documented in `helptooling/README.md` and are not part of this repository.
 
 ## pi package reference
 
