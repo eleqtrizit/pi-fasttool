@@ -1,0 +1,22 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+Thumbs.db
+.pi
+coverage/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+
+# Session-derived corpora (regenerate with the extract_*.py scripts)
+grep_examples.txt
+grep_commands.txt
+grep_flags.txt
+find_examples.txt
+find_commands.txt
+find_converted.txt
+find_flag_counts.txt
+find_tokens.txt
+smallest_list
